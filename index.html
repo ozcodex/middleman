@@ -6,9 +6,34 @@
 <body>
   <h1>Hi</h1>
   <form action="">
-    <input id="name" placeholder="nickname"/>
+    <input id="num_a" autocomplete="off" />
+    <button class="a_sel" value="1">1</button>
+    <button class="a_sel" value="2">2</button>
+    <button class="a_sel" value="3">3</button>
+    <button class="a_sel" value="4">4</button>
+    <button class="a_sel" value="5">5</button>
+    <button class="a_sel" value="6">6</button>
+    <button class="a_sel" value="7">7</button>
+    <button class="a_sel" value="8">8</button>
+    <button class="a_sel" value="9">9</button>
+    <button class="a_sel" value="10">10</button>
+    <br>
+    <input id="num_b" autocomplete="off" />
+    <button class="b_sel" value="1">1</button>
+    <button class="b_sel" value="2">2</button>
+    <button class="b_sel" value="3">3</button>
+    <button class="b_sel" value="4">4</button>
+    <button class="b_sel" value="5">5</button>
+    <button class="b_sel" value="6">6</button>
+    <button class="b_sel" value="7">7</button>
+    <button class="b_sel" value="8">8</button>
+    <button class="b_sel" value="9">9</button>
+    <button class="b_sel" value="10">10</button>
+    <br>
+    <input id="name" placeholder="nickname" autocomplete="off"/>
     <button id="conn">Unirse</button>
     <button id="play" disabled=true>Iniciar Juego</button>
+    <br>
   </form>
   <b>Estado:</b><span id="status">Esperando jugadores</span>
   <b>Creditos Disponibles:</b><span id="cash">0</span>
@@ -22,10 +47,22 @@
       e.preventDefault();
       return false;
     });
+    $(".a_sel").click((e)=>{
+      target = $(e.target)
+      target.prop("disabled",true)
+      value = target.val();
+      $('#num_a').val(($('#num_a').val() + value +","));
+    });
+    $(".b_sel").click((e)=>{
+      target = $(e.target)
+      target.prop("disabled",true)
+      value = target.val();
+      $('#num_b').val(($('#num_b').val() + value +","));
+    });
     $('#conn').click(() => {
       socket.emit('name', $('#name').val());
-      $('#play').prop("disabled",false)
-      $('#conn').prop("disabled",true)
+      $('#play').prop("disabled",false);
+      $('#conn').prop("disabled",true);
       return;
     });
     $('#play').click(() => {
@@ -35,7 +72,7 @@
     socket.on('players_info', (players) => {
       $('#players').empty();
       if(Object.keys(players).length === 0)
-        $('#players').append( $('<li>').text("No hay jugadores conectados") )
+        $('#players').append( $('<li>').text("No hay jugadores conectados") );
       for(id in players){
         let name = players[id]
         $('#players').append( $('<li>').text(name) )
