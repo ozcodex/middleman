@@ -1,0 +1,23 @@
+<html>
+<head>
+  <title>Middleman</title>
+</head>
+
+<body>
+  <h1>Hi</h1>
+  <form action="">
+    <input id="name"/>
+    <button>Send</button>
+  </form>
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+  <script>
+    var socket = io();
+    $('form').submit((e) => {
+      e.preventDefault();
+      socket.emit('name', $('#name').val());
+      return true;
+    });
+  </script>
+</body>
+</html>
