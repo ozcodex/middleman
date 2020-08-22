@@ -1,0 +1,19 @@
+{
+  "name": "middleman",
+  "version": "1.0.0",
+  "description": "Tool for middleman boardgame",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/ozcodex/middleman.git"
+  },
+  "author": "OzCodex",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ozcodex/middleman/issues"
+  },
+  "homepage": "https://github.com/ozcodex/middleman#readme"
+}
