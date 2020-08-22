@@ -7,7 +7,8 @@
   <h1>Hi</h1>
   <form action="">
     <input id="name" placeholder="nickname"/>
-    <button>Connect</button>
+    <button id="conn">Connect</button>
+    <button id="play" disabled=true>Play</button>
   </form>
   <ul id='log'></ul>
   <script src="/socket.io/socket.io.js"></script>
@@ -16,8 +17,12 @@
     var socket = io();
     $('form').submit((e) => {
       e.preventDefault();
+      return false;
+    });
+    $('#conn').click(() => {
       socket.emit('name', $('#name').val());
-      return true;
+      $('#play').prop("disabled",false)
+      return false;
     });
     socket.on('players_info', (players) => {
       $('#log').empty();
