@@ -6,8 +6,8 @@
 <body>
   <h1>Hi</h1>
   <form action="">
-    <input id="name"/>
-    <button>Send</button>
+    <input id="name" placeholder="nickname"/>
+    <button>Connect</button>
   </form>
   <ul id='log'></ul>
   <script src="/socket.io/socket.io.js"></script>
@@ -19,8 +19,12 @@
       socket.emit('name', $('#name').val());
       return true;
     });
-    socket.on('user_in', (name) => {
-      $('#log').append( $('<li>').text(name + ' comes to play') )
+    socket.on('players_info', (players) => {
+      $('#log').empty();
+      for(id in players){
+        let name = players[id]
+        $('#log').append( $('<li>').text(name) )
+      }
     });
   </script>
 </body>
