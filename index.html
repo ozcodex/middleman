@@ -9,6 +9,7 @@
     <input id="name"/>
     <button>Send</button>
   </form>
+  <ul id='log'></ul>
   <script src="/socket.io/socket.io.js"></script>
   <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
   <script>
@@ -17,6 +18,9 @@
       e.preventDefault();
       socket.emit('name', $('#name').val());
       return true;
+    });
+    socket.on('user_in', (name) => {
+      $('#log').append( $('<li>').text(name + ' comes to play') )
     });
   </script>
 </body>

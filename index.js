@@ -9,6 +9,7 @@ app.get('/',(req,res) => {
 io.on('connection', (socket) => {
   socket.on('name', (name) => {
     console.log(name + " is ready to play")
+    io.emit('user_in', name);
   });
 });
 
