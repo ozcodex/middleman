@@ -11,8 +11,9 @@
     <button id="play" disabled=true>Iniciar Juego</button>
   </form>
   <b>Estado:</b><span id="status">Esperando jugadores</span>
+  <b>Creditos Disponibles:</b><span id="cash">0</span>
   <h3>Lista de jugadores:</h3>
-  <ul id='log'></ul>
+  <ul id='players'></ul>
   <script src="/socket.io/socket.io.js"></script>
   <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
   <script>
@@ -29,22 +30,23 @@
     });
     $('#play').click(() => {
       socket.emit('start');
-      $('#play').prop("disabled",true)
       return;
     });
     socket.on('players_info', (players) => {
-      $('#log').empty();
+      $('#players').empty();
       if(Object.keys(players).length === 0)
-        $('#log').append( $('<li>').text("No hay jugadores conectados") )
+        $('#players').append( $('<li>').text("No hay jugadores conectados") )
       for(id in players){
         let name = players[id]
-        $('#log').append( $('<li>').text(name) )
+        $('#players').append( $('<li>').text(name) )
       }
+      return;
     });
     socket.on('data',(data)=>{
       if (data.status === 1 ){
         $('form').empty();
         $('#status').text('Juego en Progreso');
+        $('#cash').text(data.initial_money)
       }
     });
   </script>
