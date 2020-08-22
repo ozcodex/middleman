@@ -7,9 +7,11 @@
   <h1>Hi</h1>
   <form action="">
     <input id="name" placeholder="nickname"/>
-    <button id="conn">Connect</button>
-    <button id="play" disabled=true>Play</button>
+    <button id="conn">Unirse</button>
+    <button id="play" disabled=true>Iniciar Juego</button>
   </form>
+  <b>Estado:</b><span id="status">Esperando jugadores</span>
+  <h3>Lista de jugadores:</h3>
   <ul id='log'></ul>
   <script src="/socket.io/socket.io.js"></script>
   <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
@@ -22,13 +24,27 @@
     $('#conn').click(() => {
       socket.emit('name', $('#name').val());
       $('#play').prop("disabled",false)
-      return false;
+      $('#conn').prop("disabled",true)
+      return;
+    });
+    $('#play').click(() => {
+      socket.emit('start');
+      $('#play').prop("disabled",true)
+      return;
     });
     socket.on('players_info', (players) => {
       $('#log').empty();
+      if(Object.keys(players).length === 0)
+        $('#log').append( $('<li>').text("No hay jugadores conectados") )
       for(id in players){
         let name = players[id]
         $('#log').append( $('<li>').text(name) )
+      }
+    });
+    socket.on('data',(data)=>{
+      if (data.status === 1 ){
+        $('form').empty();
+        $('#status').text('Juego en Progreso');
       }
     });
   </script>
